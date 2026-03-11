@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+    <name>autonomous_drive</name>
+    <version>0.0.0</version>
+    <description>The autonomous_drive package</description>
+    <maintainer email="todo@todo.com">author</maintainer>
+    <license>TODO: License declaration</license>
+
+    <depend condition="$GZ_VERSION == '' or $GZ_VERSION == fortress">ignition-gazebo6</depend>
+    <depend condition="$GZ_VERSION == '' or $GZ_VERSION == fortress">ignition-plugin</depend>
+
+    <depend>xacro</depend>
+    <depend>rviz2</depend>
+    <depend>robot_state_publisher</depend>
+    <depend>joint_state_publisher</depend>
+    <depend>joint_state_publisher_gui</depend>
+    <depend>ros_gz_bridge</depend>
+    <depend>ros_gz_image</depend>
+    <depend>ros_gz_sim</depend>
+    <depend>controller_manager</depend>
+    <depend>hardware_interface</depend>
+    <depend>pluginlib</depend>
+    <depend>gz_ros2_control</depend>
+
+    <test_depend>ament_copyright</test_depend>
+    <test_depend>ament_flake8</test_depend>
+    <test_depend>ament_pep257</test_depend>
+    <test_depend>python3-pytest</test_depend>
+
+    <export>
+        <build_type>ament_python</build_type>
+    </export>
+</package>
