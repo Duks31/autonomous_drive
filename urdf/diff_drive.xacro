@@ -75,28 +75,28 @@
         </collision>
     </link>
 
-    <link name="lidar_1">
+    <link name="camera_link">
         <inertial>
-            <origin xyz="0.0 5.584513020951031e-18 0.012500000000000011" rpy="0 0 0" />
-            <mass value="0.10789485809488784" />
-            <inertia ixx="4.1e-05" iyy="4.1e-05" izz="7e-05" ixy="0.0" iyz="-0.0" ixz="0.0" />
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+            <mass value="0.1" />
+            <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" iyz="0.0" ixz="0.0" />
         </inertial>
         <visual>
-            <origin xyz="-0.05 -0.0 -0.125" rpy="0 0 0" />
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find autonomous_drive)/meshes/lidar_1.stl"
-                    scale="0.001 0.001 0.001" />
+                <box size="0.05 0.09 0.025" />
             </geometry>
-            <material name="purple" />
+            <material name="black" />
         </visual>
         <collision>
-            <origin xyz="-0.05 -0.0 -0.125" rpy="0 0 0" />
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="file://$(find autonomous_drive)/meshes/lidar_1.stl"
-                    scale="0.001 0.001 0.001" />
+                <box size="0.05 0.09 0.025" />
             </geometry>
         </collision>
     </link>
+
+    <link name="camera_optical_link" />
 
     <joint name="Revolute_1" type="continuous">
         <origin xyz="0.0 -0.1 0.05" rpy="0 0 0" />
@@ -112,10 +112,16 @@
         <axis xyz="0.0 1.0 0.0" />
     </joint>
 
-    <joint name="Rigid_3" type="fixed">
+    <joint name="camera_joint" type="fixed">
         <origin xyz="0.05 0.0 0.125" rpy="0 0 0" />
         <parent link="base_link" />
-        <child link="lidar_1" />
+        <child link="camera_link" />
+    </joint>
+
+    <joint name="camera_optical_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="-1.5707963 0.0 -1.5707963" />
+        <parent link="camera_link" />
+        <child link="camera_optical_link" />
     </joint>
 
 </robot>

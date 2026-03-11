@@ -52,7 +52,7 @@ def generate_launch_description():
             ]
         ),
         launch_arguments={
-            "gz_args": ["-r -s ", "empty.sdf"],
+            "gz_args": ["-r -s ", os.path.join(share_dir, "worlds", "room.sdf")],
             "on_exit_shutdown": "true",
         }.items(),
     )
