@@ -136,6 +136,22 @@ def generate_launch_description():
         output="screen",
     )
 
+    depthimage_to_laserscan = Node(
+        package="depthimage_to_laserscan",
+        executable="depthimage_to_laserscan_node",
+        name="depthimage_to_laserscan",
+        parameters=[
+            os.path.join(share_dir, "config", "depth_to_scan.yaml"),
+            {"use_sim_time": True},
+        ],
+        remappings=[
+            ("depth", "/camera/depth/image_raw"),
+            ("depth_camera_info", "/camera/depth/camera_info"),
+            ("scan", "/scan"),
+        ],
+        output="screen",
+    )
+
     return LaunchDescription(
         [
             set_env_vars,
@@ -149,5 +165,6 @@ def generate_launch_description():
             joint_state_broadcaster_spawner,
             diff_drive_spawner,
             cmd_vel_relay,
+            depthimage_to_laserscan,
         ]
     )
