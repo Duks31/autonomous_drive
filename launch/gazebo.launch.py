@@ -109,19 +109,24 @@ def generate_launch_description():
     )
 
     # Bridge from ROS2 to Gazebo
-    bridge = Node(
-        package="ros_gz_bridge",
-        executable="parameter_bridge",
-        name="bridge",
-        parameters=[
-            {
-                "config_file": os.path.join(
-                    share_dir, "config", "autonomous_drive_bridge.yaml"
-                ),
-                "use_sim_time": True,
-            }
+    bridge = TimerAction(
+        period=5.0,
+        actions=[
+            Node(
+                package="ros_gz_bridge",
+                executable="parameter_bridge",
+                name="bridge",
+                parameters=[
+                    {
+                        "config_file": os.path.join(
+                            share_dir, "config", "autonomous_drive_bridge.yaml"
+                        ),
+                        "use_sim_time": True,
+                    }
+                ],
+                output="screen",
+            )
         ],
-        output="screen",
     )
 
     cmd_vel_relay = Node(

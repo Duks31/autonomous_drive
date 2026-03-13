@@ -11,7 +11,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     share_dir = get_package_share_directory("autonomous_drive")
-    rviz_config_file = os.path.join(share_dir, "config", "display.rviz")
+    rviz_config_file = os.path.join(share_dir, "config", "camera_view.rviz")
 
     # xacro_file = os.path.join(share_dir, "urdf", "diff_drive.xacro")
 
@@ -59,6 +59,7 @@ def generate_launch_description():
         package="rviz2",
         executable="rviz2",
         name="rviz2",
+        parameters=[{"use_sim_time": True}],
         arguments=["-d", rviz_config_file],
         output="screen",
     )
