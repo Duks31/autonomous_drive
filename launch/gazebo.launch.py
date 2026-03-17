@@ -152,6 +152,17 @@ def generate_launch_description():
         output="screen",
     )
 
+    slam_toolbox = Node(
+        package="slam_toolbox",
+        executable="async_slam_toolbox_node",
+        name="slam_toolbox",
+        parameters=[
+            os.path.join(share_dir, "config", "slam_toolbox.yaml"),
+            {"use_sim_time": True},
+        ],
+        output="screen",
+    )
+
     return LaunchDescription(
         [
             set_env_vars,
@@ -166,5 +177,6 @@ def generate_launch_description():
             diff_drive_spawner,
             cmd_vel_relay,
             depthimage_to_laserscan,
+            slam_toolbox,
         ]
     )
