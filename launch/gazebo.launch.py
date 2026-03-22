@@ -52,7 +52,7 @@ def generate_launch_description():
             ]
         ),
         launch_arguments={
-            "gz_args": ["-r -s ", os.path.join(share_dir, "worlds", "room.sdf")],
+            "gz_args": ["-r -s ", os.path.join(share_dir, "worlds", "cone_world.sdf")],
             "on_exit_shutdown": "true",
         }.items(),
     )
@@ -129,38 +129,59 @@ def generate_launch_description():
         ],
     )
 
-    cmd_vel_relay = Node(
-        package="autonomous_drive",
-        executable="cmd_vel_relay",
-        name="cmd_vel_relay",
-        output="screen",
+    cmd_vel_relay = TimerAction(
+        period=12.0,
+        actions=[
+            Node(
+                package="autonomous_drive",
+                executable="cmd_vel_relay",
+                name="cmd_vel_relay",
+                output="screen",
+            )
+        ],
     )
 
-    depthimage_to_laserscan = Node(
-        package="depthimage_to_laserscan",
-        executable="depthimage_to_laserscan_node",
-        name="depthimage_to_laserscan",
+    rtabmap = Node(
+        package="rtabmap_slam",
+        executable="rtabmap",
+        name="rtabmap",
+        output="screen",
         parameters=[
-            os.path.join(share_dir, "config", "depth_to_scan.yaml"),
-            {"use_sim_time": True},
+            {
+                "use_sim_time": True,
+                "subscribe_depth": True,
+                "subscribe_rgb": True,
+                "subscribe_scan": False,
+                "frame_id": "base_link",
+                "odom_frame_id": "odom",
+                "map_frame_id": "map",
+                "publish_tf_map": True,
+                "approx_sync": True,
+                "visual_odometry": False,
+                "wait_for_transform": 0.5,
+                "topic_queue_size": 10,
+                "sync_queue_size": 10,
+                "camera_frame_id": "camera_optical_link",
+                # RTAB-Map parameters
+                "RGBD/LinearUpdate": "0.05",
+                "RGBD/AngularUpdate": "0.05",
+                "RGBD/NeighborLinkRefining": "true",
+                "RGBD/ProximityBySpace": "true",
+                "Grid/CellSize": "0.05",
+                "Grid/RangeMax": "4.0",
+                "Grid/RangeMin": "0.2",
+                "Grid/Sensor": "1",
+                "Mem/STMSize": "30",
+                "Vis/MinInliers": "10",
+            }
         ],
         remappings=[
-            ("depth", "/camera/depth/image_raw"),
-            ("depth_camera_info", "/camera/depth/camera_info"),
-            ("scan", "/scan"),
+            ("rgb/image", "/camera/color/image_raw"),
+            ("depth/image", "/camera/depth/image_raw"),
+            ("rgb/camera_info", "/camera/color/camera_info"),
+            ("odom", "/odom"),
         ],
-        output="screen",
-    )
-
-    slam_toolbox = Node(
-        package="slam_toolbox",
-        executable="async_slam_toolbox_node",
-        name="slam_toolbox",
-        parameters=[
-            os.path.join(share_dir, "config", "slam_toolbox.yaml"),
-            {"use_sim_time": True},
-        ],
-        output="screen",
+        namespace="rtabmap",
     )
 
     return LaunchDescription(
@@ -176,7 +197,6 @@ def generate_launch_description():
             joint_state_broadcaster_spawner,
             diff_drive_spawner,
             cmd_vel_relay,
-            depthimage_to_laserscan,
-            slam_toolbox,
+            rtabmap,
         ]
     )

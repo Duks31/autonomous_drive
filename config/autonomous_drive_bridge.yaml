@@ -40,7 +40,7 @@
 
 # Camera info for RGB comsumers (image_proc, rviz)
 - ros_topic_name: "/camera/color/camera_info"
-  gz_topic_name: "/camera/color_camera_info"
+  gz_topic_name: "/camera/camera_info"
   ros_type_name: "sensor_msgs/msg/CameraInfo"
   gz_type_name: "ignition.msgs.CameraInfo"
   direction: GZ_TO_ROS

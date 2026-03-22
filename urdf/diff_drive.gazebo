@@ -18,7 +18,7 @@
             <!-- <update_rate>30</update_rate> -->
             <update_rate>10</update_rate>
             <topic>camera</topic>
-            <gz_frame_id>camera_link</gz_frame_id>
+            <gz_frame_id>camera_optical_link</gz_frame_id>
             <camera name="oak_d_lite">
                 <horizontal_fov>1.2043</horizontal_fov>  <!-- OAK-D Lite ~69 deg; yours was 87 deg,
                 pick one -->

@@ -11,7 +11,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     share_dir = get_package_share_directory("autonomous_drive")
-    rviz_config_file = os.path.join(share_dir, "config", "scan_map.rviz")
+    rviz_config_file = os.path.join(share_dir, "config", "rtabmap_config.rviz")
 
     # xacro_file = os.path.join(share_dir, "urdf", "diff_drive.xacro")
 
