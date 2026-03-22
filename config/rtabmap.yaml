@@ -18,7 +18,7 @@ rtabmap:
     Mem/InitWMWithAllNodes: "false"
 
     # Visual odometry
-    Vis/MinInliers: "10"
+    Vis/MinInliers: "5"
     Vis/InlierDistance: "0.1"
 
     # Loop closure

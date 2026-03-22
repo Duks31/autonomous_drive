@@ -167,12 +167,15 @@ def generate_launch_description():
                 "RGBD/AngularUpdate": "0.05",
                 "RGBD/NeighborLinkRefining": "true",
                 "RGBD/ProximityBySpace": "true",
+                "RGBD/LoopClosureReextractFeatures": "true",
                 "Grid/CellSize": "0.05",
                 "Grid/RangeMax": "4.0",
                 "Grid/RangeMin": "0.2",
                 "Grid/Sensor": "1",
                 "Mem/STMSize": "30",
-                "Vis/MinInliers": "10",
+                "Vis/MinInliers": "5",
+                "Kp/MaxFeatures": "400",
+                "Kp/DetectorStrategy": "6",
             }
         ],
         remappings=[
@@ -181,6 +184,7 @@ def generate_launch_description():
             ("rgb/camera_info", "/camera/color/camera_info"),
             ("odom", "/odom"),
         ],
+        arguments=['--delete_db_on_start'],
         namespace="rtabmap",
     )
 
